@@ -19,6 +19,7 @@ responses to API calls are in JSON format, and will be in the format `{status: :
 ### Docker
 A very simple Dockerfile is provided to run this in a container: `docker build -it essjayhch/nvm_kata .` will run this build locally.
 the build script should build the container. It can be triggered from the command line by running `docker_start.sh`
+DockerHub is also configured to auto-build on commit to master the repository can be found at [Dockerhub](https://hub.docker.com/r/essjayhch/nvm_kata)
 
 ## Tests
 ### Unit and Integratoin tests

@@ -3,5 +3,5 @@ gem install bundler && \
 bundle install && \
 bundle exec rake rubocop && \
 bundle exec rake test && \
-tar czf ../nvm_kata.tar.gz --exclude='tmp/*' --exclude='log/*' .
+tar czf ../nvm_kata.tar.gz --exclude='tmp/*' --exclude='log/*' --exclude='.git/' .
 docker build -t essjayhch/nvm_kata .
