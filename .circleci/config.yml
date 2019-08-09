@@ -20,7 +20,8 @@ jobs:
           command: bundle exec rake test
 
 workflows:
-  - version: 2
-    test:
-      jobs:
-        - test
+  version: 2
+  test:
+    jobs:
+      - test
+

@@ -1,5 +1,5 @@
 # NVM Kata
-
+[![CircleCI](https://circleci.com/gh/essjayhch/nvm_kata.svg?style=svg)](https://circleci.com/gh/essjayhch/nvm_kata)
 This is an api system that is designed to answer the coding challenge
 
 It provides a few RESTful endpoints as follows:
