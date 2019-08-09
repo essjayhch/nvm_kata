@@ -1,0 +1,26 @@
+version: 2
+
+jobs:
+  test:
+    docker:
+      - image: circleci/ruby:2.6
+    steps:
+      - checkout
+      - run:
+          name: install bundler
+          command: gem install bundler
+      - run:
+          name: bundle install
+          command: bundle install
+      - run:
+          name: run linter
+          command: bundle exec rake rubocop
+      - run:
+          name: run test suite
+          command: bundle exec rake test
+
+workflows:
+  - version: 2
+    test:
+      jobs:
+        - test

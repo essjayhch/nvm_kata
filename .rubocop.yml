@@ -1,0 +1,8 @@
+AllCops:
+  Include:
+    - 'app/controllers/nvm_kata/math_controller.rb'
+    - 'app/models/nvm_kata/math.rb'
+    - 'test/integration/nvm_kata/math_test.rb'
+    - 'test/models/nvm_kata/math_test.rb'
+  Exclude:
+    - 'bin/*'
