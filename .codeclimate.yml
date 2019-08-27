@@ -1,0 +1,16 @@
+---
+version: "2"
+plugins:
+  bundler-audit:
+    enabled: true
+  rubocop:
+    enabled: true
+    channel: rubocop-0-74
+  flog:
+    enabled: true
+    config:
+      score_threshold: 20.0
+  reek:
+    enabled: true
+  brakeman:
+    enabled: true

@@ -1,5 +1,7 @@
 # NVM Kata
 [![CircleCI](https://circleci.com/gh/essjayhch/nvm_kata.svg?style=svg)](https://circleci.com/gh/essjayhch/nvm_kata)
+[![Maintainability](https://api.codeclimate.com/v1/badges/fb4b9b7edf7c2ca939c4/maintainability)](https://codeclimate.com/github/essjayhch/nvm_kata/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/fb4b9b7edf7c2ca939c4/test_coverage)](https://codeclimate.com/github/essjayhch/nvm_kata/test_coverage)
 This is an api system that is designed to answer the coding challenge
 
 It provides a few RESTful endpoints as follows:
@@ -31,5 +33,4 @@ Some linting for the user application code has been set up to run. This can be r
 In order to build a basic tarball of this application, there is a `build.sh` script provided. This runs bundle install, runs the linting and test suite methods, and if that succeeds, it then constructs a tarball for the project in the parent directory called ../nvm_kata.tar.gz
 ### TODO
 Tidy the script so it doesn't include so much noise and/or git headers
-
 
