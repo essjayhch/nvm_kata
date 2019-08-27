@@ -1,6 +1,7 @@
 plugins:
   rubocop:
     enabled: true
+    channel: rubocop-0-74
   flog:
     enabled: true
     config:
