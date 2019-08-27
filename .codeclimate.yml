@@ -1,3 +1,11 @@
 plugins:
   rubocop:
     enabled: true
+  flog:
+    enabled: true
+    config:
+      score_threshold: 20.0
+  reek:
+    enabled: true
+  brakeman:
+    enabled: true
