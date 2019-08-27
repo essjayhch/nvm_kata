@@ -5,54 +5,42 @@ module NvmKata
   # Math Controller
   class MathController < ApplicationController
     before_action :coerce_params
+
     def add
-      @res = NvmKata::Math.new(primitive: @a) + @b
-      render json: { status: :ok, result: @res }
-    rescue NvmKata::Math::Error
-      error('+')
+      handle_it(:+)
     end
 
     def sub
-      @res = NvmKata::Math.new(primitive: @a) - @b
-      render json: { status: :ok, result: @res }
-    rescue NvmKata::Math::Error
-      error('-')
+      handle_it(:-)
     end
 
     def mul
-      @res = NvmKata::Math.new(primitive: @a) * @b
-      render json: { status: :ok, result: @res }
-    rescue NvmKata::Math::Error
-      error('*')
+      handle_it(:*)
     end
 
     def divide
-      @res = NvmKata::Math.new(primitive: @a) / @b
-      render json: { status: :ok, result: @res }
-    rescue NvmKata::Math::Error
-      error('/')
+      handle_it(:/)
     end
 
     def fact
-      @res = NvmKata::Math.new(primitive: @a.to_i).!
-      render json: { status: :ok, result: @res }
+      render json: { status: :ok, result: @a.send(:!) }
     rescue NvmKata::Math::Error => e
       error('!', e)
     end
 
     private
 
+    def handle_it(operand)
+      render json: { status: :ok, result: @a.send(operand, @b) }
+    rescue NvmKata::Math::Error => e
+      error(operand, e)
+    end
+
     def coerce_params
-      @a = Float(params[:a])
+      @a = NvmKata::Math.new(primitive: Float(params[:a]))
       @b = Float(params[:b]) if params[:b]
-    rescue StandardError
-      render json: {
-        status: :invalid_query,
-        request_params: {
-          primitive: params[:a],
-          operand: params[:b]
-        }, error: 'Invalid request_parmas: Not coercible to float'
-      }, status: 400
+    rescue StandardError => e
+      error('coerce', "Invalid params : Not coercible to float #{e}")
     end
 
     def error(operator, message = 'invalid parameters')
