@@ -34,4 +34,3 @@ In order to build a basic tarball of this application, there is a `build.sh` scr
 ### TODO
 Tidy the script so it doesn't include so much noise and/or git headers
 
-
