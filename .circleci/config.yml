@@ -1,27 +1,77 @@
 version: 2
 
 jobs:
-  test:
+  build:
+    parallelism: 1
+    shell: /bin/bash --login
+    environment:
+      RAILS_ENV: test
+      RACK_ENV: test
+      COVERAGE: true
+      TZ: /usr/share/zoneinfo/Etc/Utc
     docker:
       - image: circleci/ruby:2.6
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v2-dep-{{ .Branch }}-
+            - v2-dep-master-
+            - v2-dep-
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64> ./cc-test-reporter
+            chmod +x ./cc-test-reporter
       - run:
           name: install bundler
           command: gem install bundler
       - run:
           name: bundle install
-          command: bundle install
-      - run:
-          name: run linter
-          command: bundle exec rake rubocop
+          command: bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - save_cache:
+          key: v2-dep-{{ .Branch }}-{{ epoch }}
+          paths:
+            - ./vendor/bundle
+            - ~/.bundle
       - run:
           name: run test suite
-          command: bundle exec rake test
-
+          command: |
+            ./cc=test-reporter before-build
+            TESTFILES=$(circleci tests glob "test/**/*_spec.rb" | circleci tests split --split-by=timings)
+            bundle exec rake test -- ${TESTFILES}
+      - run:
+          name: Code Climate Test Coverage
+          command: |
+            ./cc-test-reporter format-coverage -t simplecov -o "coverage/codeclimate.${CIRCLE_NODE_INDEX}.json"
+      - persist_to_workspace:
+          root: coverage
+          paths:
+            - codeclimate.*.json
+      - store_test_results:
+          path: test/reports
+      - store_artifacts:
+          path: test/artifacts
+  upload_coverage:
+    docker:
+      - image: circleci/ruby:2.6
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Install Code Climate Test Reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run:
+          command: |
+            ./cc-test-reporter sum-coverage --output - codeclimate.*.json | ./cc-test-reporter upload-coverage --debug --input -
 workflows:
   version: 2
-  test:
+  commit:
     jobs:
-      - test
+      - build
+      - upload_coverage:
+          requires:
+            - build
 
