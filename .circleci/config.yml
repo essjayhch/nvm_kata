@@ -9,7 +9,7 @@ jobs:
       RACK_ENV: test
       COVERAGE: true
       TZ: /usr/share/zoneinfo/Etc/Utc
-      TESTOPTS: "--ci-dir=$CIRCLE_TEST_REPORTS/reports/minitest"
+      TESTOPTS: "--ci-dir=test/reports/minitest"
     docker:
       - image: circleci/ruby:2.6
     steps:
