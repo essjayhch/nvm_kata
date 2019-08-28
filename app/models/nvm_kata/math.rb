@@ -38,8 +38,9 @@ module NvmKata
     end
 
     def !
-      unless primitive.is_a?(Integer) && primitive.positive?
-        raise Error, 'Invalid factorial'
+      tmp = primitive.to_i
+      unless tmp == primitive && primitive.positive?
+        raise Error, 'Invalid factorial (Must be positive integer)'
       end
 
       (1..primitive).inject(:*) || 1
