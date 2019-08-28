@@ -29,6 +29,7 @@ group :development, :test do
   gem 'minitest'
   gem 'factory_bot_rails'
   gem 'rubocop'
+  gem 'simplecov'
 end
 
 group :development do
