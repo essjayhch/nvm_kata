@@ -37,7 +37,7 @@ jobs:
       - run:
           name: run test suite
           command: |
-            ./cc=test-reporter before-build
+            ./cc-test-reporter before-build
             TESTFILES=$(circleci tests glob "test/**/*_spec.rb" | circleci tests split --split-by=timings)
             bundle exec rake test -- ${TESTFILES}
       - run:
