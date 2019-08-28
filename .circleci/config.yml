@@ -9,6 +9,7 @@ jobs:
       RACK_ENV: test
       COVERAGE: true
       TZ: /usr/share/zoneinfo/Etc/Utc
+      TESTOPTS: "--ci-dir=$CIRCLE_TEST_REPORTS/reports"
     docker:
       - image: circleci/ruby:2.6
     steps:
@@ -21,19 +22,23 @@ jobs:
       - run:
           name: Setup Code Climate test-reporter
           command: |
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64> ./cc-test-reporter
+            [ -f ./cc-test-reporter ] || curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64> ./cc-test-reporter
             chmod +x ./cc-test-reporter
       - run:
           name: install bundler
           command: gem install bundler
       - run:
           name: bundle install
-          command: bundle install --path=vendor/bundle --jobs=4 --retry=3
+          command: bundle check || bundle install --path=vendor/bundle --jobs=4 --retry=3
       - save_cache:
           key: v2-dep-{{ .Branch }}-{{ epoch }}
           paths:
             - ./vendor/bundle
             - ~/.bundle
+      - save_cache:
+          key: v2-dep-
+          paths:
+            - ./cc-test-reporter
       - run:
           name: run test suite
           command: |
