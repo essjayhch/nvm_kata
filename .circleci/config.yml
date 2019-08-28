@@ -7,6 +7,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: fetch code coverage
+          command: wget https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+      - run:
           name: install bundler
           command: gem install bundler
       - run:
