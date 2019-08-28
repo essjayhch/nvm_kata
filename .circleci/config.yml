@@ -35,9 +35,6 @@ jobs:
             - ./vendor/bundle
             - ~/.bundle
       - run:
-          name: run linter
-          command: bundle exec rake rubocop
-      - run:
           name: run test suite
           command: |
             mkdir -p test-results/rspec test-artifacts
