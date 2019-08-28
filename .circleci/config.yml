@@ -37,15 +37,9 @@ jobs:
       - run:
           name: run test suite
           command: |
-            mkdir -p test-results/rspec test-artifacts
             ./cc=test-reporter before-build
             TESTFILES=$(circleci tests glob "test/**/*_spec.rb" | circleci tests split --split-by=timings)
-            bundle exec rake test --profile 10 \
-                                  --color \
-                                  --format RspecJunitFormatter \
-                                  --out test-results/rspec/rspec.xml \
-                                  --format progress \
-                                  -- ${TESTFILES}
+            bundle exec rake test -- ${TESTFILES}
       - run:
           name: Code Climate Test Coverage
           command: |
@@ -55,9 +49,9 @@ jobs:
           paths:
             - codeclimate.*.json
       - store_test_results:
-          path: test-results
+          path: test/reports
       - store_artifacts:
-          path: test-artifacts
+          path: test/artifacts
   upload_coverage:
     docker:
       - image: circleci/ruby:2.6

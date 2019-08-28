@@ -30,6 +30,8 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rubocop'
   gem 'simplecov'
+  gem 'rspec_junit_formatter'
+  gem 'minitest-ci'
 end
 
 group :development do

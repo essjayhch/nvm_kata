@@ -80,6 +80,8 @@ GEM
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.11.3)
+    minitest-ci (3.4.0)
+      minitest (>= 5.0.6)
     msgpack (1.3.1)
     nio4r (2.4.0)
     nokogiri (1.10.4)
@@ -120,6 +122,11 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    rspec-core (3.8.2)
+      rspec-support (~> 3.8.0)
+    rspec-support (3.8.2)
+    rspec_junit_formatter (0.4.1)
+      rspec-core (>= 2, < 4, != 2.12.0)
     rubocop (0.74.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -163,8 +170,10 @@ DEPENDENCIES
   factory_bot_rails
   listen (>= 3.0.5, < 3.2)
   minitest
+  minitest-ci
   puma (~> 3.11)
   rails (~> 5.2.3)
+  rspec_junit_formatter
   rubocop
   simplecov
   spring
